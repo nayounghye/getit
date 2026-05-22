@@ -22,6 +22,7 @@ function HomeContent() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [isComplex, setIsComplex] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   const fetchPlaces = useCallback(async () => {
     try {
@@ -56,8 +57,10 @@ function HomeContent() {
   };
 
   const handleSave = async () => {
-    if (!name.trim()) return;
+    if (!name.trim() || saving) return;
+    setSaving(true);
 
+    try {
     if (editingPlace) {
       await fetch(`/api/places/${editingPlace.id}`, {
         method: "PUT",
@@ -68,7 +71,7 @@ function HomeContent() {
       const placeRes = await fetch("/api/places", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), description: description.trim() || null }),
+        body: JSON.stringify({ name: name.trim(), description: description.trim() || null, is_complex: isComplex }),
       });
 
       if (placeRes.ok && !isComplex) {
@@ -82,6 +85,9 @@ function HomeContent() {
     }
     setModalOpen(false);
     fetchPlaces();
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleDelete = async (id: string) => {
@@ -215,10 +221,10 @@ function HomeContent() {
           )}
           <button
             onClick={handleSave}
-            disabled={!name.trim()}
+            disabled={!name.trim() || saving}
             className="w-full rounded-lg bg-primary py-2.5 text-sm font-semibold text-white disabled:opacity-40"
           >
-            {editingPlace ? "수정" : "추가"}
+            {saving ? "저장 중..." : editingPlace ? "수정" : "추가"}
           </button>
         </div>
       </Modal>
