@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-primary: #3B82F6;
+  --color-success: #10B981;
+  --color-danger: #EF4444;
+  --color-warning: #F59E0B;
+  --color-gray-100: #F8F9FA;
+  --color-gray-200: #F3F4F6;
+  --color-gray-300: #E5E7EB;
+  --color-gray-400: #9CA3AF;
+  --color-gray-500: #6B7280;
+  --color-dark: #1A1A1A;
+}
+
+body {
+  font-family: -apple-system, "Hiragino Sans", sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
