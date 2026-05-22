@@ -29,7 +29,7 @@ export default function Modal({
     <dialog
       ref={dialogRef}
       onClose={onClose}
-      className="w-[calc(100%-32px)] max-w-[448px] rounded-xl bg-white p-0 backdrop:bg-black/40"
+      className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-32px)] max-w-[448px] rounded-xl bg-white p-0 backdrop:bg-black/40 m-0"
     >
       <div className="flex items-center justify-between border-b border-gray-300 px-4 py-3">
         <h2 className="text-base font-bold">{title}</h2>
