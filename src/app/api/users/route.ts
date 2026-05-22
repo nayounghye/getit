@@ -13,14 +13,25 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
+  const name = body.name?.trim();
 
-  if (!body.name?.trim()) {
+  if (!name) {
     return NextResponse.json({ error: "name required" }, { status: 400 });
+  }
+
+  const { data: existing } = await supabase
+    .from("users")
+    .select("*")
+    .eq("name", name)
+    .single();
+
+  if (existing) {
+    return NextResponse.json(existing);
   }
 
   const { data, error } = await supabase
     .from("users")
-    .insert({ name: body.name.trim() })
+    .insert({ name })
     .select()
     .single();
 
