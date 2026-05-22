@@ -9,6 +9,7 @@ import ProgressBar from "@/components/ProgressBar";
 import Modal from "@/components/Modal";
 import OfflineBanner from "@/components/OfflineBanner";
 import AuthGuard from "@/components/AuthGuard";
+import SwipeActions from "@/components/SwipeActions";
 import { useUser } from "@/lib/user-context";
 import { PlaceWithStats } from "@/lib/types";
 
@@ -148,14 +149,16 @@ function HomeContent() {
         ) : (
           <div className="space-y-3">
             {places.map((place) => (
-              <div key={place.id} className="group relative">
+              <SwipeActions
+                key={place.id}
+                onEdit={() => openEdit(place)}
+                onDelete={() => handleDelete(place.id)}
+              >
                 <button
                   onClick={() => handlePlaceClick(place)}
-                  className="w-full text-left block rounded-xl border border-gray-300 bg-white p-3 active:bg-gray-100 transition-colors"
+                  className="w-full text-left block border border-gray-300 bg-white p-3 active:bg-gray-100 transition-colors rounded-xl"
                 >
-                  <div className="flex items-start justify-between">
-                    <h2 className="text-base font-semibold">{place.name}</h2>
-                  </div>
+                  <h2 className="text-base font-semibold">{place.name}</h2>
                   <p className="mt-1 text-xs text-gray-500">
                     {place.store_count > 1 ? `매장 ${place.store_count}개 · ` : ""}
                     {place.item_checked}/{place.item_total} 완료
@@ -164,21 +167,7 @@ function HomeContent() {
                     <ProgressBar checked={place.item_checked} total={place.item_total} />
                   </div>
                 </button>
-                <div className="absolute right-2 top-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button
-                    onClick={(e) => { e.preventDefault(); openEdit(place); }}
-                    className="rounded-md p-1.5 text-gray-400 hover:bg-gray-100"
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                  </button>
-                  <button
-                    onClick={(e) => { e.preventDefault(); handleDelete(place.id); }}
-                    className="rounded-md p-1.5 text-gray-400 hover:bg-red-50 hover:text-danger"
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                  </button>
-                </div>
-              </div>
+              </SwipeActions>
             ))}
           </div>
         )}

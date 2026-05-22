@@ -9,6 +9,7 @@ import ProgressBar from "@/components/ProgressBar";
 import Modal from "@/components/Modal";
 import OfflineBanner from "@/components/OfflineBanner";
 import AuthGuard from "@/components/AuthGuard";
+import SwipeActions from "@/components/SwipeActions";
 import { useUser } from "@/lib/user-context";
 import Link from "next/link";
 import { Place, StoreWithStats } from "@/lib/types";
@@ -134,10 +135,14 @@ function PlaceContent() {
         ) : (
           <div className="space-y-3">
             {stores.map((store) => (
-              <div key={store.id} className="group relative">
+              <SwipeActions
+                key={store.id}
+                onEdit={() => openEdit(store)}
+                onDelete={() => handleDelete(store.id)}
+              >
                 <Link
                   href={`/store/${store.id}`}
-                  className="block rounded-xl border border-gray-300 bg-white p-3 active:bg-gray-100 transition-colors"
+                  className="block border border-gray-300 bg-white p-3 active:bg-gray-100 transition-colors rounded-xl"
                 >
                   <div className="flex items-center justify-between">
                     <h2 className="text-base font-semibold">{store.name}</h2>
@@ -163,21 +168,7 @@ function PlaceContent() {
                     <ProgressBar checked={store.item_checked} total={store.item_total} />
                   </div>
                 </Link>
-                <div className="absolute right-2 top-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button
-                    onClick={(e) => { e.preventDefault(); openEdit(store); }}
-                    className="rounded-md p-1.5 text-gray-400 hover:bg-gray-100"
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                  </button>
-                  <button
-                    onClick={(e) => { e.preventDefault(); handleDelete(store.id); }}
-                    className="rounded-md p-1.5 text-gray-400 hover:bg-red-50 hover:text-danger"
-                  >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                  </button>
-                </div>
-              </div>
+              </SwipeActions>
             ))}
           </div>
         )}
