@@ -123,19 +123,19 @@ function StoreContent() {
             onAction={() => router.push(`/store/${id}/add`)}
           />
         ) : (
-          <div className="space-y-3 pt-2">
+          <div className="grid grid-cols-2 gap-3 pt-2">
             {uncheckedFirst.map((item) => (
               <div
                 key={item.id}
-                className={`group relative flex rounded-xl border border-gray-300 transition-all duration-200 ${
+                className={`group relative rounded-xl border border-gray-300 overflow-hidden transition-all duration-200 ${
                   item.is_checked ? "bg-gray-200 opacity-60" : "bg-white"
                 }`}
               >
                 <button
                   onClick={() => toggleCheck(item.id)}
-                  className="flex items-center gap-3 flex-1 p-3 text-left min-w-0"
+                  className="w-full text-left"
                 >
-                  <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100">
+                  <div className="relative aspect-square w-full overflow-hidden bg-gray-100">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={item.image_url}
@@ -144,42 +144,33 @@ function StoreContent() {
                         item.is_checked ? "opacity-50" : ""
                       }`}
                     />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span
-                        className={`text-sm font-semibold truncate ${
-                          item.is_checked ? "text-gray-400 line-through" : ""
-                        }`}
-                      >
-                        {item.name}
+                    <div className={`absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full border-2 transition-colors ${
+                      item.is_checked
+                        ? "border-success bg-success"
+                        : "border-white bg-white/60"
+                    }`}>
+                      {item.is_checked && (
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M20 6L9 17l-5-5" />
+                        </svg>
+                      )}
+                    </div>
+                    {item.priority === "must" && !item.is_checked && (
+                      <span className="absolute top-2 left-2 rounded bg-warning/90 px-1.5 py-0.5 text-[10px] font-bold text-white">
+                        MUST
                       </span>
-                      {item.priority === "must" && !item.is_checked && (
-                        <span className="flex-shrink-0 rounded bg-warning/20 px-1.5 py-0.5 text-[10px] font-bold text-warning">
-                          MUST
-                        </span>
-                      )}
-                    </div>
-                    <div className="mt-0.5 flex items-center gap-2 text-xs text-gray-500">
-                      {item.price != null && (
-                        <span className={`font-bold ${item.is_checked ? "text-gray-400" : "text-dark"}`}>
-                          ¥{item.price.toLocaleString()}
-                        </span>
-                      )}
-                    </div>
-                    {item.memo && (
-                      <p className="mt-0.5 text-xs text-gray-400 truncate">{item.memo}</p>
                     )}
                   </div>
-                  <div className={`flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border-2 transition-colors ${
-                    item.is_checked
-                      ? "border-success bg-success"
-                      : "border-gray-300"
-                  }`}>
-                    {item.is_checked && (
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M20 6L9 17l-5-5" />
-                      </svg>
+                  <div className="p-2">
+                    <p className={`text-xs font-medium truncate ${
+                      item.is_checked ? "text-gray-400 line-through" : ""
+                    }`}>
+                      {item.name}
+                    </p>
+                    {item.price != null && (
+                      <p className={`text-[11px] font-bold mt-0.5 ${item.is_checked ? "text-gray-400" : "text-dark"}`}>
+                        ¥{item.price.toLocaleString()}
+                      </p>
                     )}
                   </div>
                 </button>
