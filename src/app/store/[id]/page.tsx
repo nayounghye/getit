@@ -185,6 +185,8 @@ function StoreContent() {
                       <img
                         src={item.image_url}
                         alt={item.name}
+                        loading="lazy"
+                        decoding="async"
                         className={`h-full w-full object-cover transition-opacity duration-200 ${
                           item.is_checked ? "opacity-50" : ""
                         }`}

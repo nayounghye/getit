@@ -23,14 +23,12 @@ function BrowseContent() {
       const placesData = await placesRes.json();
       setPlaces(placesData);
 
-      const allStores: Store[] = [];
-      for (const place of placesData) {
-        const storesRes = await fetch(`/api/stores?place_id=${place.id}`);
-        if (storesRes.ok) {
-          const storesData = await storesRes.json();
-          allStores.push(...storesData);
-        }
-      }
+      const storeResults = await Promise.all(
+        placesData.map((place: Place) =>
+          fetch(`/api/stores?place_id=${place.id}`).then((r) => r.ok ? r.json() : [])
+        )
+      );
+      const allStores: Store[] = storeResults.flat();
       setStores(allStores);
       if (allStores.length > 0) {
         setSelectedStoreId(allStores[0].id);
@@ -138,6 +136,8 @@ function BrowseContent() {
                         <img
                           src={item.image_url}
                           alt={item.name}
+                          loading="lazy"
+                          decoding="async"
                           className="h-full w-full object-cover"
                         />
                       </div>

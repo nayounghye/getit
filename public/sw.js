@@ -1,5 +1,5 @@
-const CACHE_NAME = "getit-v1";
-const STATIC_ASSETS = ["/", "/manifest.json"];
+const CACHE_NAME = "getit-v2";
+const STATIC_ASSETS = ["/", "/manifest.json", "/icons/animation.gif"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -56,14 +56,19 @@ self.addEventListener("fetch", (event) => {
 
   event.respondWith(
     caches.match(request).then((cached) => {
-      const fetched = fetch(request)
-        .then((response) => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
-          return response;
-        })
-        .catch(() => cached);
-      return cached || fetched;
+      if (cached) {
+        fetch(request)
+          .then((response) => {
+            caches.open(CACHE_NAME).then((cache) => cache.put(request, response));
+          })
+          .catch(() => {});
+        return cached;
+      }
+      return fetch(request).then((response) => {
+        const clone = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
+        return response;
+      });
     })
   );
 });

@@ -8,7 +8,13 @@ const nextConfig: NextConfig = {
         hostname: "*.supabase.co",
       },
     ],
+    formats: ["image/webp", "image/avif"],
+    minimumCacheTTL: 60 * 60 * 24 * 30,
   },
+  experimental: {
+    optimizePackageImports: ["@supabase/supabase-js"],
+  },
+  compress: true,
 };
 
 export default nextConfig;
