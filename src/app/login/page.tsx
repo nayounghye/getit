@@ -21,7 +21,7 @@ export default function LoginPage() {
     <div className="flex flex-1 flex-col items-center justify-center px-8">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/icons/animation.gif" alt="wave" width={64} height={64} className="mb-4" />
-      <h1 className="text-2xl font-bold mb-1">GetIt</h1>
+      <h1 className="text-2xl font-bold mb-1">Get-it</h1>
       <p className="text-sm text-gray-500 mb-8">여행 쇼핑 리스트</p>
 
       <input

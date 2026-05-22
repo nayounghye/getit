@@ -109,7 +109,7 @@ function HomeContent() {
     <>
       <OfflineBanner />
       <TopBar
-        title="GetIt"
+        title="Get-it"
         right={
           <div className="flex items-center gap-2">
             <button

@@ -4,7 +4,7 @@ import SWRegister from "@/components/SWRegister";
 import { UserProvider } from "@/lib/user-context";
 
 export const metadata: Metadata = {
-  title: "GetIt",
+  title: "Get-it",
   description: "여행 쇼핑 리스트",
   manifest: "/manifest.json",
   icons: {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "GetIt",
+    title: "Get-it",
   },
 };
 
