@@ -26,12 +26,13 @@ export async function GET(request: NextRequest) {
       id: place.id,
       name: place.name,
       description: place.description,
+      is_complex: place.is_complex,
       sort_order: place.sort_order,
       created_at: place.created_at,
       store_count: stores.length,
       item_total: itemTotal,
       item_checked: itemChecked,
-      single_store_id: stores.length === 1 ? stores[0].id : null,
+      single_store_id: !place.is_complex && stores.length === 1 ? stores[0].id : null,
     };
   });
 
@@ -47,7 +48,12 @@ export async function POST(request: NextRequest) {
 
   const { data, error } = await supabase
     .from("places")
-    .insert({ name: body.name, description: body.description ?? null, sort_order: count ?? 0 })
+    .insert({
+      name: body.name,
+      description: body.description ?? null,
+      is_complex: body.is_complex ?? false,
+      sort_order: count ?? 0,
+    })
     .select()
     .single();
 

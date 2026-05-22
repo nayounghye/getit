@@ -8,6 +8,7 @@ export interface Place {
   id: string;
   name: string;
   description: string | null;
+  is_complex: boolean;
   sort_order: number;
   created_at: string;
   stores?: Store[];
