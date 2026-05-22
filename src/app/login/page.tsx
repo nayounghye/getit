@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { useUser } from "@/lib/user-context";
 
 export default function LoginPage() {
@@ -19,7 +20,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex flex-1 flex-col items-center justify-center px-8">
-      <div className="text-5xl mb-4">🛍️</div>
+      <Image src="/icons/waving-hand.png" alt="wave" width={64} height={64} className="mb-4" />
       <h1 className="text-2xl font-bold mb-1">GetIt</h1>
       <p className="text-sm text-gray-500 mb-8">여행 쇼핑 리스트</p>
 
